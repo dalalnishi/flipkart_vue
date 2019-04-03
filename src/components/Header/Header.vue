@@ -1,4 +1,5 @@
 <template>
+<div>
 <div class="div-main">
     <div class="container">
         <nav class="navbar navbar-expand-sm navbar-light" >                
@@ -26,7 +27,7 @@
             </ul>
         </nav>
     </div>
-    
+</div>
     <!-- Categories Listing Dropdown -->
     <div class="div-category">
     <a-dropdown class="a-category" v-for="category in categories" :key="category.id">
@@ -38,48 +39,19 @@
         <a-menu-item v-for="subcat in category.tbl_subcategories" :key="subcat.id">
             {{ subcat.subcat_name }}
         </a-menu-item>
-        <!-- <a-menu-item>{{ subcat.subcat_name }}</a-menu-item> -->
-
-        <!-- <a-menu-item>2nd menu item</a-menu-item>
-        <a-sub-menu title="sub menu" key="test">
-            <a-menu-item>3rd menu item</a-menu-item>
-            <a-menu-item>4th menu item</a-menu-item>
-        </a-sub-menu>
-        <a-sub-menu title="disabled sub menu" disabled>
-            <a-menu-item>5d menu item</a-menu-item>
-            <a-menu-item>6th menu item</a-menu-item>
-        </a-sub-menu> -->
         </a-menu>
     </a-dropdown>
-    </div>  
-    
-    <!-- Carousel -->
-    <div>
-        <carousel :per-page="1" :mouse-drag="false" :autoplay="true" :loop="true" :autoplayHoverPause="true" :autoplayTimeout="4500">
-            <slide>
-                <img src="../../assets/b449a2cbe3218e7d.jpg" alt="img1" class="ca-img"/>
-            </slide>
-            <slide>
-                <img src="../../assets/ce425625e412dfd6.jpg" alt="img2" class="ca-img"/>
-            </slide>
-            <slide>
-                <img src="../../assets/f0c72858992901b7.jpg" alt="img3" class="ca-img"/>
-            </slide>
-        </carousel>
-    </div>
+    </div>    
 </div>  
 </template>
 
 <script>
 
 import Search from '../../components/Search/Search.vue';
-import { Carousel, Slide } from 'vue-carousel';
 
 export default {
     components: {
-        Search,
-        Carousel,
-        Slide
+        Search
     },
 
     computed: {
@@ -103,11 +75,6 @@ export default {
 
     .plus {
         width: 10px;
-    }
-
-    .ca-img  {
-        height: 350px;
-        width: 100%;
     }
 
     ul {
@@ -134,7 +101,7 @@ export default {
 
     .div-main {
         background-color:#2874f0;
-        height: 100px;
+        height: 56px;
     }
 
     input {
@@ -145,9 +112,10 @@ export default {
     }
 
     .div-category {
-        height: 40%;
+        height: 43%;
         background-color: white;
         padding-top: 9px;
+        padding-bottom: 9px;
     }
 
     .a-category {
@@ -156,6 +124,9 @@ export default {
         font-weight: 600;
     }
 
+    .nav-link {
+        cursor: pointer;
+    }
 </style>
 
 
