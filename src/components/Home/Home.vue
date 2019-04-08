@@ -11,7 +11,24 @@
             <slide>
                 <img src="../../assets/f0c72858992901b7.jpg" alt="img3" class="ca-img"/>
             </slide>
+            <slide>
+                <img src="../../assets/37e9e012b6e0f2a3edf47438f066958d.jpg" alt="img4" class="ca-img"/>
+            </slide>
+            <slide>
+                <img src="../../assets/flipkart-festive-dhamaka.png" alt="img5" class="ca-img"/>
+            </slide>
         </carousel>
+
+        <div style="background-color: #ececec; padding: 20px;">
+            <a-row :gutter="16">
+            <a-col :span="8" v-for="pro in products" :key="pro.product_id">
+                <a-card :title="pro.subcat_name" :bordered="true">
+                <p><img :src="imgUrl+pro.product_img[0]" /></p>
+                {{ pro.brand_name }}
+                </a-card>
+            </a-col>
+            </a-row>
+        </div>
     </div>
 </template>
 
@@ -24,7 +41,20 @@ export default {
     components: {
         Carousel,
         Slide,
+    },
+    created () {
+        this.$store.dispatch('getProducts');
+    },
+
+    computed: {
+        products () {
+            return this.$store.state.HomeStore.products;
+        },
+        imgUrl () {
+            return this.$store.state.AppStore.imageUrl;
+        }
     }
+
 }
 </script>
 
@@ -32,6 +62,11 @@ export default {
     .ca-img  {
         height: 350px;
         width: 100%;
+    }
+
+    img {
+        height: 150px;
+        width: 80px;
     }
 </style>
 

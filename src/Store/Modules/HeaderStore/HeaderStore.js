@@ -8,7 +8,6 @@ const actions = {
     getCategories({commit}) {
         axios.get('/category/all')
             .then((res) => {
-                console.log(res.data);
                 commit('setCategories', res.data)
             })
             .catch(err => {

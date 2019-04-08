@@ -4,7 +4,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-sm navbar-light" >                
             <router-link to="/" class="navbar-brand">
-                <img alt="Flipcart Logo" src="../../assets/flipkart-plus.png" class="img"/>
+                <img alt="Flipcart Logo" src="../../assets/flipkart-plus.png" class="img-logo"/>
                 <p><font style="color: white;">Explore</font>&nbsp;<font style="color:yellow;">Plus</font>&nbsp;<img class="plus" alt="plus" src="../../assets/plus.png" /></p>
             </router-link>
 
@@ -35,10 +35,19 @@
             {{ category.category_name }} <a-icon type="down" />
         </a>
         
-        <a-menu slot="overlay">
-        <a-menu-item v-for="subcat in category.tbl_subcategories" :key="subcat.id">
-            {{ subcat.subcat_name }}
-        </a-menu-item>
+        <a-menu 
+            v-for="subcat in category.tbl_subcategories" 
+            :key="subcat.subcat_id"
+            slot="overlay"
+        >        
+        <a-sub-menu 
+            v-for="subcat in category.tbl_subcategories" 
+            :key="subcat.subcat_id"
+            v-if="subcat.isDelete === 0"                          
+            :title="subcat.subcat_name"
+            @click.native="submenuClick(subcat.subcat_id)" 
+        >
+        </a-sub-menu>
         </a-menu>
     </a-dropdown>
     </div>    
@@ -48,6 +57,7 @@
 <script>
 
 import Search from '../../components/Search/Search.vue';
+import ListView from '../../components/ListView/ListView.vue';
 
 export default {
     components: {
@@ -60,15 +70,29 @@ export default {
         }
     }, 
 
-    created() {
+    created () {
         this.$store.dispatch('getCategories');
+    },
+
+    data () {
+        return {
+            
+        }
+    },
+
+    methods: {
+        submenuClick (sid) {
+            let subcategoryid = sid;
+            this.$store.dispatch('getBySubcategory', subcategoryid);
+            this.$router.push({name: 'ListView', component: ListView, params: { id: subcategoryid }});            
+        }
     }
 }
 </script>
 
 <style scoped>
 
-    .img {
+    .img-logo {
         height: 90%;
         width: 75px;
     }
@@ -116,6 +140,8 @@ export default {
         background-color: white;
         padding-top: 9px;
         padding-bottom: 9px;
+        box-shadow: 4px 2px 4px 2px;
+        color: grey;
     }
 
     .a-category {
@@ -127,6 +153,7 @@ export default {
     .nav-link {
         cursor: pointer;
     }
+
 </style>
 
 

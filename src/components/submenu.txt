@@ -1,0 +1,15 @@
+<a-sub-menu 
+            v-for="subcat in category.tbl_subcategories" 
+            :key="subcat.subcat_id"
+            :title="subcat.subcat_name"
+            @click.native="submenuClick(subcat.subcat_id)" 
+        >
+            <a-menu-item 
+                v-for="brand in subcat.tbl_brands" 
+                :key="brand.brand_id"
+                v-if="brand.brand_id!='' && brand.isDelete === 0"
+                @click="brandClick(brand.brand_id)"
+            >
+                {{ brand.brand_name }}
+            </a-menu-item>
+        </a-sub-menu>
