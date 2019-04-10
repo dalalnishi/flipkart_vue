@@ -5,7 +5,8 @@
         <nav class="navbar navbar-expand-sm navbar-light" >                
             <router-link to="/" class="navbar-brand">
                 <img alt="Flipcart Logo" src="../../assets/flipkart-plus.png" class="img-logo"/>
-                <p><font style="color: white;">Explore</font>&nbsp;<font style="color:yellow;">Plus</font>&nbsp;<img class="plus" alt="plus" src="../../assets/plus.png" /></p>
+                <p><font style="color: white;">Explore</font>&nbsp;<font style="color:yellow;">Plus</font>&nbsp;
+                    <img class="plus" alt="plus" src="../../assets/plus.png" /></p>
             </router-link>
 
             <div>
@@ -15,10 +16,12 @@
 
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                <router-link to="/signin" tag="li" class="nav-link">Login &</router-link>
+                <!-- <router-link to="/signin" tag="li" class="nav-link">Login &</router-link> -->
+                    <button @click="showLoginModal">Login &</button>
                 </li>
                 <li class="nav-item">
-                <router-link to="/signup" tag="li" class="nav-link">&nbsp;Signup</router-link>
+                <!-- <router-link to="/signup" tag="li" class="nav-link">&nbsp;Signup</router-link> -->
+                    <button @click="showRegi=true">Signup</button>
                 </li>
                 <li class="nav-item">
                 <router-link to="/cart" tag="li" class="nav-link">
@@ -26,6 +29,7 @@
                 </li>
             </ul>
         </nav>
+        <login v-if="showLogin"/>
     </div>
 </div>
     <!-- Categories Listing Dropdown -->
@@ -58,10 +62,12 @@
 
 import Search from '../../components/Search/Search.vue';
 import ListView from '../../components/ListView/ListView.vue';
+import Login from '../../components/Login/Login.vue'
 
 export default {
     components: {
-        Search
+        Search,
+        Login
     },
 
     computed: {
@@ -76,8 +82,13 @@ export default {
 
     data () {
         return {
-            
+            showLogin: false,
+            showRegi: false
         }
+    },
+
+    watch: {
+        
     },
 
     methods: {
@@ -85,6 +96,10 @@ export default {
             let subcategoryid = sid;
             this.$store.dispatch('getBySubcategory', subcategoryid);
             this.$router.push({name: 'ListView', component: ListView, params: { id: subcategoryid }});            
+        },
+        showLoginModal () {
+            debugger
+            this.showLogin = true;
         }
     }
 }
@@ -154,6 +169,14 @@ export default {
         cursor: pointer;
     }
 
+    button {
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        outline: none;
+    }
 </style>
 
 

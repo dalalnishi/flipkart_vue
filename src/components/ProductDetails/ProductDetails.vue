@@ -12,7 +12,7 @@
                 :key="id">
             
                 <img 
-                    class="img-thumbnail" 
+                    class="img-thumbnail"
                     :src="thumbUrl+image"
                     @mouseover="imgDisp(imgUrl+image)"
                 />
@@ -26,7 +26,8 @@
     
         <img 
             :src="thumbImage === '' ? imgUrl+p.product_img[0] : thumbImage"
-            class="ori-image"
+            class="ori-image hover-img"
+            v-hover-zoom-img="{containerId: 'app'}"
         />
     </div>
     <!-- For Details -->

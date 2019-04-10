@@ -20,11 +20,10 @@
         </carousel>
 
         <div style="background-color: #ececec; padding: 20px;">
-            <a-row :gutter="16">
-            <a-col :span="8" v-for="pro in products" :key="pro.product_id">
-                <a-card :title="pro.subcat_name" :bordered="true">
+            <a-row :gutter="25">
+            <a-col :span="6" v-for="pro in products" :key="pro.product_id">
+                <a-card :title="pro.brand_name" :bordered="true" @click="productDetail(pro.product_id)" class="ant-css">
                 <p><img :src="imgUrl+pro.product_img[0]" /></p>
-                {{ pro.brand_name }}
                 </a-card>
             </a-col>
             </a-row>
@@ -33,40 +32,46 @@
 </template>
 
 <script>
-
-import { Carousel, Slide } from 'vue-carousel';
+import { Carousel, Slide } from "vue-carousel";
 
 export default {
-    name: 'Home',
-    components: {
-        Carousel,
-        Slide,
-    },
-    created () {
-        this.$store.dispatch('getProducts');
-    },
+  name: "Home",
+  components: {
+    Carousel,
+    Slide
+  },
+  created() {
+    this.$store.dispatch("getProducts");
+  },
 
-    computed: {
-        products () {
-            return this.$store.state.HomeStore.products;
-        },
-        imgUrl () {
-            return this.$store.state.AppStore.imageUrl;
-        }
+  computed: {
+    products() {
+      return this.$store.state.HomeStore.products;
+    },
+    imgUrl() {
+      return this.$store.state.AppStore.imageUrl;
     }
-
-}
+  },
+  methods: {
+      productDetail (pid) {
+          this.$router.push({name: 'Product_Details', params: { id: pid }});            
+      }
+  }
+};
 </script>
 
 <style scoped>
-    .ca-img  {
-        height: 350px;
-        width: 100%;
-    }
+.ca-img {
+  height: 350px;
+  width: 100%;
+}
 
-    img {
-        height: 150px;
-        width: 80px;
-    }
+img {
+  height: 150px;
+  width: 80px;
+}
+.ant-css {
+    cursor: pointer;    
+}
 </style>
 

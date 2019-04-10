@@ -125,7 +125,9 @@ export default {
     height: 50%;
   }
   .brand-div {
-    padding: 75px;
+    /* padding: 75px; */
+    margin-right: 100px;
+    text-align: center;
   }
   .brands-div {
     margin-bottom: 25px;
@@ -161,7 +163,7 @@ export default {
   }
   .thumbnail-image {
     padding: 15px;
-    height: 350px;
+    height: 230px;
   }
   .list-group-item .thumbnail-image {
     margin-right: 10px;

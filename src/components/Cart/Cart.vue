@@ -1,55 +1,59 @@
 <template>
-    <div class="container">
-    <div>        
-        
-        {{ cartDet }}
-        <div v-for="c in products" :key="c.product_id">
-            {{ c }}
-        </div>
-    </div>
+    <div class="container">    
 
-    <!--<table class="table table-hover table-condensed" id="cart">
+    <table class="table table-hover table-condensed" id="cart">
     <thead>
         <th>Product</th>
         <th>Price</th>
         <th>Quantity</th>
         <th>Subtotal</th>
     </thead>
-    <tr>
+    <tr v-for="(c, id) in products" :key="id">
 		<td data-th="Product">
-			<div class="row">
-				<div class="col-sm-2 hidden-xs">-->
-					<!-- <img :src="cartItem.thumbnail_url" alt="..." class="img-responsive"/> -->
-                    <!--Image
+			<div class="row" >
+				<div class="col-sm-2 hidden-xs">
+					<img :src="thumbUrl+c.product_img[0]" alt="..." class="img-responsive" style="margin-left: 25px;"/>
 				</div>
-				<div class="col-sm-10">
-					<h4 class="nomargin">{{ cartDet.product_name }}IPHone</h4>
-					<p>{{ cartDet.product_desc }}2.9 Ghz Dual-Core Intel Core i5 Broadwell Tubro boost up to 3.3 GHz with L3 3MB cache</p>
+				<div class="col-sm-10" id="pname-css">
+					<h4 class="nomargin">{{ c.product_name }}</h4>					
 				</div>
 			</div>
 		</td>
-		<td data-th="Price">{{ cartDet.product_price }}700</td>
+		<td data-th="Price">{{ formatPrice(c.product_price) }}</td>
 		<td data-th="Quantity">
 			<input type="number" class="form-control text-center" 
-				value="3" 
-				min="0">
+                v-model="qty"
+				value="1" 
+				min="0"
+            >
 		</td>
-		<td data-th="Subtotal" class="text-center">$subtotal</td>
+		<td data-th="Subtotal" class="text-center">₹{{subtotal(c.product_price)}}</td>
 		<td class="actions" data-th="">
-			<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
+			<button class="btn btn-danger btn-sm" @click="removeItem(c.product_id)"><i class="fa fa-trash-o"></i></button>								
 		</td>
 	</tr>
     <tr data-v-32c58de7="">
         <td data-v-32c58de7="">
-            <button data-v-32c58de7="" class="btn btn-warning">Save and Continue Shopping</button>
+            <button 
+                data-v-32c58de7="" 
+                class="btn btn-warning"
+                @click="redirectHome">
+            Save and Continue Shopping
+            </button>
         </td>
         <td data-v-32c58de7="" colspan="2" class="hidden-xs"></td> 
-        <td data-v-32c58de7="" class="hidden-xs text-center"><strong data-v-32c58de7="">Total $5353</strong></td> 
+        <td data-v-32c58de7="" class="hidden-xs text-center">
+            <strong data-v-32c58de7="">Total ₹</strong>
+        </td> 
         <td data-v-32c58de7="">
-            <button data-v-32c58de7="" class="btn btn-success btn-block">Checkout </button>
+            <button 
+                data-v-32c58de7="" 
+                class="btn btn-success btn-block">
+            Checkout
+            </button>
         </td>
     </tr>
-    </table>-->
+    </table>
 
     </div>
 </template>
@@ -61,39 +65,63 @@ export default {
         return {
             local: [],
             cartItems: [],
-            cartDet: []
+            cartDet: [],
+            qty: 1
         }
     },
 
     created () {
-        console.log('created');
         this.$store.dispatch('getProductsDetail');
     },
     
     mounted () {
-       console.log('mounted');
+       
         this.local = JSON.parse(localStorage.getItem('product_id'));
+        
         if(this.local!=null) {
             
             this.cartItems = this.local.map((id) => {
-                return parseInt(id.product_id);
+                return id;
             });
         }
     },
 
     computed: {
         
-        products () {
-            
+        products () {    
+            this.cartDet = [];
             this.$store.state.CartStore.productsDtl.map((pro) => {
-                if(this.cartItems.includes(parseInt(pro.product_id))) {
-                    // return pro;
-                    this.cartDet.push(pro);
-                    // return this.cartDet;
-                }
-                return this.cartDet
+                this.cartItems.map((c) => {
+                    if(c.product_id===pro.product_id) {
+                        this.cartDet.push(pro);
+                    }
+                })
+            })            
+            return this.cartDet;            
+        },
+        thumbUrl () {
+            return this.$store.state.AppStore.thumbUrl;
+        }
+    },
+
+    methods: {
+        redirectHome () {
+            this.$router.push('/');
+        },
+        removeItem (product_id) {
+            
+            this.cartItems = this.cartItems.filter((item, i) => {            
+                return (parseInt(item.product_id)!==parseInt(product_id))                 
             })
             
+            localStorage.setItem('product_id', JSON.stringify(this.cartItems));
+        },
+        formatPrice (price) {
+            return "₹ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")
+        },
+        subtotal (price) {
+            let value = price*this.qty;
+            return "₹ " + value.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")
         }
     }
 }
@@ -110,6 +138,8 @@ export default {
         display: table;
         box-sizing: border-box;
         margin-top: 50px;
+        box-shadow: 4px 2px 25px 5px;
+        color: gray;
     }
     thead {
         display: table-header-group;
@@ -119,7 +149,6 @@ export default {
     }
     td {
         box-sizing: border-box;
-        vertical-align: bottom;
         border-bottom: 2px solid #ddd;
         padding: 5px;
         line-height: 1.42857143;
@@ -127,6 +156,7 @@ export default {
     th {
         font-weight: bold;
         display: table-cell;
+        padding: 20px;
     }
     tr :-moz-last-node :last-child {
         border-bottom: none;
@@ -174,6 +204,13 @@ export default {
         border: 1px solid transparent;
         border-radius: 4px;
         float: right;
+    }
+    #pname-css {
+        display: flex;
+        max-height: 200px;
+        height: 100px;
+        justify-content: center;
+        align-items: center;
     }
 </style>
 
