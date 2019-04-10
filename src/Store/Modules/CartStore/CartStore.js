@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const state = {
-    products: []
+    productsDtl: []
 }
 
 const actions = {
-    getProducts({commit}) {
+    getProductsDetail({commit}) {
         
         axios.get('/product/getAll')
             .then((res) => {
@@ -15,7 +15,7 @@ const actions = {
                     res.data[i].product_img = files[i];
                     return item.files;
                 })
-                commit('setProducts', res.data)
+                commit('setProductsDtl', res.data)
             })
             .catch(err => {
                 console.log(err.res.data.error);
@@ -24,8 +24,8 @@ const actions = {
 }
 
 const mutations = {
-    setProducts(state, payload) {
-        state.products = payload;
+    setProductsDtl(state, payload) {
+        state.productsDtl = payload;
     }
 }
 

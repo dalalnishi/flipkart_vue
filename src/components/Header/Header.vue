@@ -21,7 +21,7 @@
                 <router-link to="/signup" tag="li" class="nav-link">&nbsp;Signup</router-link>
                 </li>
                 <li class="nav-item">
-                <router-link to="/" tag="li" class="nav-link">
+                <router-link to="/cart" tag="li" class="nav-link">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Cart</router-link>
                 </li>
             </ul>

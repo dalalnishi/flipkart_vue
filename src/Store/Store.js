@@ -8,6 +8,7 @@ import ListViewStore from '../Store/Modules/ListViewStore/ListViewStore.js'
 import AppStore from '../Store/app.js'
 import HomeStore from '../Store/Modules/HomeStore/HomeStore.js'
 import DetailsStore from '../Store/Modules/DetailsStore/DetailsStore.js'
+import CartStore from '../Store/Modules/CartStore/CartStore.js'
 
 export const store = new Vuex.Store({
     modules: {
@@ -15,6 +16,7 @@ export const store = new Vuex.Store({
         HeaderStore,
         ListViewStore,
         HomeStore,
-        DetailsStore
+        DetailsStore,
+        CartStore
     }
 })

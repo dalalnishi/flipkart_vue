@@ -27,7 +27,7 @@
         <img 
             :src="thumbImage === '' ? imgUrl+p.product_img[0] : thumbImage"
             class="ori-image"
-            />
+        />
     </div>
     <!-- For Details -->
     <div class="col-md-5 img-detl" 
@@ -37,8 +37,25 @@
         <p style="font-size:18px;">{{ p.product_name }}</p>
         <p style="font-size:28px; font-weight: bolder;">{{ formatPrice(p.product_price) }}</p>
         <p><font style="font-size:20px; font-weight: bolder;">Description: </font>{{ p.product_desc }}</p>
-        <button class="button-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Add To Cart</button>
-        <button class="button-buy"><i class="fa fa-shopping-bag" aria-hidden="true"></i>&nbsp;Buy</button>
+
+        <button  
+            v-if="!show" 
+            @click="addCart(p.product_id)"
+            class="button-cart">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Add To Cart
+        </button>
+
+        <button  
+            v-if="show"
+            @click="goCart"
+            class="button-cart">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Go To Cart
+        </button>
+
+        <button 
+            class="button-buy">
+            <i class="fa fa-shopping-bag" aria-hidden="true"></i>&nbsp;Buy
+        </button>
     </div>
 
     </div>  <!-- End of Row -->      
@@ -52,13 +69,17 @@ export default {
     name: 'Product_Details',
 
     created () {
-        let id = this.$route.params.id;
-        this.$store.dispatch('getProductById', id);
+        this.routeid = this.$route.params.id;
+        this.$store.dispatch('getProductById', this.routeid);
     },
 
     data () {
         return {
-            thumbImage: ''
+            routeid: '',
+            thumbImage: '',
+            show: false,
+            local: [],
+            cart: []
         }
     },
 
@@ -74,14 +95,46 @@ export default {
         }      
     },
 
+    mounted () {
+        
+        this.local = JSON.parse(localStorage.getItem('product_id'));
+        if(this.local!=null) {
+        
+            this.local.map((id) => {
+                if( parseInt(id.product_id) === parseInt(this.routeid)) {
+                    this.show = true;
+                }
+            });
+        }
+    },
+
     methods: {
         imgDisp (img) {
             this.thumbImage = img;
         },
-        formatPrice(value) {
+        formatPrice (value) {
             return "₹ " + value.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")
-        }
+        },
+        addCart (productId) {
+            this.show = true;
+            
+            this.cart = [];
 
+            this.cart = JSON.parse(localStorage.getItem("product_id"));
+            if (this.cart === null) {
+                this.cart = [];
+            }
+            this.cart.push({ product_id: productId });
+            localStorage.setItem("product_id", JSON.stringify(this.cart));
+
+            this.$notification['success']({
+                message: 'Cart',
+                description: 'Successfully Added to Cart!!!',
+            });
+        },
+        goCart () {
+            this.$router.push({name: 'cart'});            
+        }
     }
 }
 </script>

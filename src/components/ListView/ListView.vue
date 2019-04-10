@@ -25,8 +25,8 @@
 
         <div class="ratings margin-left-sm">
           <p class="pull-right">
-            <button class="btn btn-success">
-              Add to cart
+            <button class="btn btn-success" @click="viewDetails(sub.product_id)">
+              View Details
             </button>
           </p>
           <div class="clearfix"></div>
@@ -54,8 +54,8 @@
 
         <div class="ratings margin-left-sm">
           <p class="pull-right">
-            <button class="btn btn-success">
-              Add to cart
+            <button class="btn btn-success" @click="viewDetails(b.product_id)">
+              View Details
             </button>
           </p>
           <div class="clearfix"></div>
@@ -102,6 +102,9 @@ export default {
       this.bid = brand_id;      
       this.$store.dispatch('getByBrand', this.bid);  
       this.show = true;    
+    },
+    viewDetails (pid) {
+      this.$router.push({name: 'Product_Details', params: { id: pid }});            
     }
   }
 
