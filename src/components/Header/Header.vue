@@ -18,6 +18,7 @@
                 <li class="nav-item active">
                 <!-- <router-link to="/signin" tag="li" class="nav-link">Login &</router-link> -->
                     <button @click="showLoginModal">Login &</button>
+                    <login v-if="showLogin" :toggle="showLoginModal"/>
                 </li>
                 <li class="nav-item">
                 <!-- <router-link to="/signup" tag="li" class="nav-link">&nbsp;Signup</router-link> -->
@@ -29,7 +30,6 @@
                 </li>
             </ul>
         </nav>
-        <login v-if="showLogin"/>
     </div>
 </div>
     <!-- Categories Listing Dropdown -->
@@ -87,19 +87,14 @@ export default {
         }
     },
 
-    watch: {
-        
-    },
-
     methods: {
         submenuClick (sid) {
             let subcategoryid = sid;
             this.$store.dispatch('getBySubcategory', subcategoryid);
             this.$router.push({name: 'ListView', component: ListView, params: { id: subcategoryid }});            
         },
-        showLoginModal () {
-            debugger
-            this.showLogin = true;
+        showLoginModal () {            
+            this.showLogin = !this.showLogin;
         }
     }
 }
