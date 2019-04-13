@@ -23,10 +23,13 @@
                 <li class="nav-item">
                 <!-- <router-link to="/signup" tag="li" class="nav-link">&nbsp;Signup</router-link> -->
                     <button @click="showRegi=true">Signup</button>
+                    <Register v-if="showRegi" :toggleReg="showRegiModal"/>
                 </li>
                 <li class="nav-item">
                 <router-link to="/cart" tag="li" class="nav-link">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Cart</router-link>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Cart
+                </router-link>
                 </li>
             </ul>
         </nav>
@@ -62,12 +65,14 @@
 
 import Search from '../../components/Search/Search.vue';
 import ListView from '../../components/ListView/ListView.vue';
-import Login from '../../components/Login/Login.vue'
+import Login from '../../components/Login/Login.vue';
+import Register from '../../components/Registration/Registration.vue';
 
 export default {
     components: {
         Search,
-        Login
+        Login,
+        Register
     },
 
     computed: {
@@ -95,6 +100,9 @@ export default {
         },
         showLoginModal () {            
             this.showLogin = !this.showLogin;
+        },
+        showRegiModal () {            
+            this.showRegi = !this.showRegi;
         }
     }
 }

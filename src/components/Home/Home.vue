@@ -18,8 +18,8 @@
                 <img src="../../assets/flipkart-festive-dhamaka.png" alt="img5" class="ca-img"/>
             </slide>
         </carousel>
-
-        <div style="background-color: #ececec; padding: 20px;">
+        
+        <div style="padding: 20px;">
             <a-row :gutter="25">
             <a-col :span="6" v-for="pro in products" :key="pro.product_id">
                 <a-card :title="pro.brand_name" :bordered="true" @click="productDetail(pro.product_id)" class="ant-css">
@@ -27,8 +27,8 @@
                 </a-card>
             </a-col>
             </a-row>
-        </div>
-    </div>
+        </div>  
+      </div>   
 </template>
 
 <script>
@@ -72,6 +72,8 @@ img {
 }
 .ant-css {
     cursor: pointer;    
+    margin-top: 12px;
 }
+
 </style>
 
