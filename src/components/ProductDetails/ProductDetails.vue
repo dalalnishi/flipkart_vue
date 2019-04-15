@@ -114,7 +114,8 @@ export default {
             this.thumbImage = img;
         },
         formatPrice (value) {
-            return "₹ " + value.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")
+            let pprice = value.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")
+            return "₹ " + pprice.split('.')[0];
         },
         addCart (productId) {
             this.show = true;

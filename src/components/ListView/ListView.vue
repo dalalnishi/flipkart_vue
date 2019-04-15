@@ -47,7 +47,7 @@
           <img :src="imgUrl+b.product_img[0]" alt="" class="grow thumbnail-image">
             
           <div class="caption margin-left-sm">
-            <h4 class="pull-right">₹{{ b.product_price }}</h4>
+            <h4 class="pull-right">{{ formatPrice(b.product_price) }}</h4>
           </div>
           {{ b.product_name }}
         </a>
@@ -105,6 +105,10 @@ export default {
     },
     viewDetails (pid) {
       this.$router.push({name: 'Product_Details', params: { id: pid }});            
+    },
+    formatPrice (value) {
+      let pprice = value.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")
+      return "₹ " + pprice.split('.')[0];
     }
   }
 

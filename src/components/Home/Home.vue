@@ -40,6 +40,7 @@ export default {
     Carousel,
     Slide
   },
+  
   created() {
     this.$store.dispatch("getProducts");
   },

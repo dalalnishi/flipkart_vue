@@ -1,5 +1,6 @@
 <template>
     <a-modal
+      ref="modalreg"
       v-model="showModal"
       :footer="null"
       @cancel="toggleReg"
@@ -46,16 +47,8 @@
                 </div>
 
                 <button id="goto-signin-btn" @click="onRegister">Sign UP</button>
-                <button id="register-btn">Login</button>
+                <!-- <button id="register-btn">Login</button> -->
               </form>
-
-              <!-- <div style="margin-top: 42px">
-              </div>
-
-              <div class="button-set">
-                
-              </div> -->
-
             </div>
           </div>
         </div>
@@ -96,10 +89,6 @@ export default {
       emailValid: false,
       passValid: false,
       logError: ''
-      // passRules: [
-      //     v => !!v || 'Password is required',
-      //     v => /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,14}$/.test(v) || 'Password must contain 8 - 14 characters with a number'
-      // ]
     }
   },
 
@@ -185,10 +174,16 @@ export default {
             email: this.emailid,
             password: this.password
           }
-          this.$store.dispatch('registerUser', user)
-            .then(() => {
-               this.$message.error('Registration Failed!!!');
-          }) 
+          
+          this.$store.dispatch('registerUser', user).then((response) => {
+            this.toggleReg();
+            this.$router.push('/');
+            location.reload();
+          })
+          .catch(err => {
+            this.$message.error(err);
+          })
+          
         }      
       } 
     }
@@ -219,7 +214,7 @@ export default {
   width: 50%;
 }
 #bp-right {
-  background: url("../../assets/Untitled-flip.png") no-repeat top left;
+  background: url("../../assets/Untitled-signup.png") no-repeat top left;
   border-left: 1px solid #eee;
 }
   

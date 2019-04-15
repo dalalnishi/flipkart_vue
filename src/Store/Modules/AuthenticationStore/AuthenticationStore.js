@@ -1,38 +1,49 @@
 import axios from 'axios';
 
 const state = {
-    error: ''
+    token: ''
 }
 
 const actions = {
-    // User Login
+    
     logUser ({commit}, user) {
-        axios.post('user/login', user)
+        return new Promise((resolve, reject) => {
+         axios.post('user/login', user)
             .then((response) => {
-                console.log(response.data);
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('uid', response.data.id);
+                commit('setToken', response.data.token);
+                resolve(response.data);
             })
             .catch(err => {
-                commit('setError', err.response.data.message);
-                console.log(err.response.data.message);
+                reject(err.response.data.message)
             })
+        })
     },
 
     // User Registration
-    registerUser ({commit}, user) {
-        axios.post('user/signUp', user)
+    registerUser ({dispatch}, user) {
+        return new Promise((resolve, reject) => {
+            axios.post('user/signUp', user)
             .then((response) => {
                 console.log(response.data);
+                let userl = {
+                    email: user.email,
+                    password: user.password
+                }
+                dispatch('logUser', userl);
+                resolve(response.data);
             })
             .catch(err => {
-                // commit('setError', err.response.data.message);
-                console.log(err.response.data.message);
+                reject(err.response.data.message);
             })
+        })
     }
 }
 
 const mutations = {
-    setError(state, errorMsg) {
-        state.error = errorMsg;
+    setToken(state, data) {
+        state.token = data;
     }
 }
 

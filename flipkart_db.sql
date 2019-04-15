@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 08, 2019 at 01:12 PM
+-- Generation Time: Apr 15, 2019 at 12:59 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `tbl_products` (
 INSERT INTO `tbl_products` (`product_id`, `product_name`, `product_desc`, `product_price`, `product_img`, `bid`, `isDelete`, `createdAt`, `updatedAt`) VALUES
 (1, 'Redmi Go', 'Fast, sleek and powerful - meet the Redmi Go. Its 12.7 cm (5) HD display is designed to deliver sharp and vibrant visuals. Loaded with the Android Oreo (Go edition) OS, the Redmi Go ensures a smooth, light and fast user experience.', 4499, '[\"mi-redmi-go-1554288252721.jpeg\",\"thumb_187000_default_big-1554288252722.jpeg\",\"Xiaomi-Redmi-Go-4-696x435-1554288252724.jpg\"]', 1, 0, '2019-04-03 10:44:12', '2019-04-03 10:44:12'),
 (2, 'Samsung S10', 'It comes with an Intelligent Camera that automatically optimizes its settings to give you picture-perfect photos. That\'s not all, the Samsung S10 has the Infinity-O Display and a seamless design that make this smartphone a true masterpiece.', 66900, '[\"2-1554288442921.jpeg\",\"1-1554288442921.jpeg\",\"3-1554288442922.jpeg\",\"4-1554288442923.jpeg\"]', 2, 0, '2019-04-03 10:47:22', '2019-04-03 10:47:22'),
-(3, 'Samsung A30', 'The Dual Camera System, comprising the 16 MP Low Light Camera and 5 MP Ultra-wide Camera, lets you take rich and beautiful pictures. Powered by the Exynos 7904 Processor and 4 GB of RAM, this phone will make multitasking seamless.', 16990, '[\"samsung-galaxy-a30-sm-a305f-1554288619793.jpeg\",\"samsung-galaxy-a30-sm-a305f2-1554288619793.jpeg\",\"samsung-galaxy-a30-sm-a305f3-1554288619794.jpeg\",\"samsung-galaxy-a30-sm-a305f4-1554288619797.jpeg\"]', 2, 0, '2019-04-03 10:50:19', '2019-04-03 10:50:19'),
+(3, 'Samsung A30', 'The Dual Camera System, comprising the 16 MP Low Light Camera and 5 MP Ultra-wide Camera, lets you take rich and beautiful pictures. Powered by the Exynos 7904 Processor and 4 GB of RAM, this phone will make multitasking seamless.', 16990, '[\"samsung-galaxy-a30-sm-a305f-1554288619793.jpeg\",\"samsung-galaxy-a30-sm-a305f2-1554288619794.jpeg\",\"samsung-galaxy-a30-sm-a305f3-1554288619794.jpeg\",\"samsung-galaxy-a30-sm-a305f4-1554288619797.jpeg\"]', 2, 0, '2019-04-03 10:50:19', '2019-04-03 10:50:19'),
 (4, 'Realme 3', 'It has a 3D Unibody Design, that\'s complemented by a gradient effect, which adds to your stylish persona. Its 13+2 MP AI Dual Camera, coupled with the Chroma Boost feature and Nightscape Mode, helps capture all the fine details of precious moments.', 8999, '[\"realme-3-rmx1825-original-imaferd5xsz9aehd-1554288861577.jpeg\",\"realme-3-rmx1825-original-imaferd5zvhurjhg-1554288861578.jpeg\",\"realme-3-rmx1825-original-imaferkevgaqpvfx-1554288861579.jpeg\"]', 3, 0, '2019-04-03 10:54:21', '2019-04-03 10:54:21'),
 (5, 'Realme 2', 'It has a 3D Unibody Design, that\'s complemented by a gradient effect, which adds to your stylish persona. Its 13+2 MP AI Dual Camera, coupled with the Chroma Boost feature and Nightscape Mode, helps capture all the fine details of precious moments.', 9499, '[\"1-1554289113744.jpeg\",\"2-1554289113745.jpeg\",\"3-1554289113745.jpeg\"]', 3, 0, '2019-04-03 10:58:33', '2019-04-03 10:58:33'),
 (6, 'Oppo A7', 'Do a lot more than just take calls on the Oppo A7. With a mighty 4230 mAh battery and Qualcomm Snapdragon 450 1.8 GHz Octa-core Processor, along with 3 GB of RAM, this phone can virtually handle any task that you throw at it.', 13990, '[\"oppo-a71k-cph-1801-original-imaf946hgfawjgdm-1554289288054.jpeg\",\"oppo-a71k-cph-1801-original-imaf946hhdys6utg-1554289288055.jpeg\",\"oppo-a71k-cph-1801-original-imaf946hzdvsafnd-1554289288056.jpeg\"]', 4, 0, '2019-04-03 11:01:28', '2019-04-03 11:01:28'),
@@ -343,6 +343,31 @@ INSERT INTO `tbl_subcategories` (`subcat_id`, `subcat_name`, `cat_id`, `isDelete
 (43, 'Exercise & Fitness', 7, 1, '2019-04-02 09:21:09', '2019-04-02 09:21:09'),
 (44, 'Sports', 7, 1, '2019-04-02 09:21:22', '2019-04-02 09:21:22'),
 (45, 'Car Electronics & Appliances', 7, 1, '2019-04-02 09:22:10', '2019-04-02 09:22:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_users`
+--
+
+DROP TABLE IF EXISTS `tbl_users`;
+CREATE TABLE IF NOT EXISTS `tbl_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fullname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_users`
+--
+
+INSERT INTO `tbl_users` (`id`, `fullname`, `email`, `password`, `createdAt`, `updatedAt`) VALUES
+(1, 'Nishi Dalal', 'nish@gmail.com', '$2a$10$IpCrlIYwU6feS4gDsv5o4.XtDgWx0a.lgz/SXk5aYwijSLYxD5bBe', '2019-04-13 09:39:21', '2019-04-13 09:39:21'),
+(2, 'Meet Sorathia', 'meet@gmail.com', '$2a$10$Ot30Ck5p4Y.PhTCsI0bhsex7WoXdXHw7g8tx7GHnrEsG9x3E.dEQi', '2019-04-15 12:58:01', '2019-04-15 12:58:01');
 
 --
 -- Constraints for dumped tables

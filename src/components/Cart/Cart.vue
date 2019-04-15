@@ -8,7 +8,22 @@
         <th>Quantity</th>
         <th>Subtotal</th>
     </thead>
-    <tr v-for="(c, id) in products" :key="id">
+    <tr v-if="products.length<=0">
+        <!-- <td colspan="4">No Items in cart</td> -->
+        <td colspan="6">
+            <img src="../../assets/cart-img.png" />
+            <tr>
+                <td colspan="6">
+                <center><button 
+                    class="btn btn-success"
+                    @click="redirectHome">
+                    Continue Shopping
+                </button></center>
+                </td>
+            </tr>
+        </td>
+    </tr>
+    <tr v-else v-for="(c, id) in products" :key="id">
 		<td data-th="Product">
 			<div class="row" >
 				<div class="col-sm-2 hidden-xs">
@@ -25,14 +40,15 @@
                 v-model="qty"
 				value="1" 
 				min="0"
+                @input="changeQty(value)"
             >
 		</td>
-		<td data-th="Subtotal" class="text-center">₹{{subtotal(c.product_price)}}</td>
+		<td data-th="Subtotal" class="text-center">{{subtotal(c.product_price)}}</td>
 		<td class="actions" data-th="">
 			<button class="btn btn-danger btn-sm" @click="removeItem(c.product_id)"><i class="fa fa-trash-o"></i></button>								
 		</td>
 	</tr>
-    <tr data-v-32c58de7="">
+    <tr data-v-32c58de7="" v-if="products.length>0">
         <td data-v-32c58de7="">
             <button 
                 data-v-32c58de7="" 
@@ -117,11 +133,15 @@ export default {
             localStorage.setItem('product_id', JSON.stringify(this.cartItems));
         },
         formatPrice (price) {
-            return "₹ " + price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")
+            let pprice = price.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")
+            return "₹ " + pprice.split('.')[0];
         },
         subtotal (price) {
             let value = price*this.qty;
-            return "₹ " + value.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")
+            return "₹ " + (value.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")).split('.')[0]
+        },
+        changeQty (qty) {
+            console.log(event.target.value,'hyy ',qty);
         }
     }
 }
@@ -212,5 +232,6 @@ export default {
         justify-content: center;
         align-items: center;
     }
+   
 </style>
 

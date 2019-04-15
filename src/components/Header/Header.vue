@@ -15,15 +15,23 @@
             </div>  
 
             <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="nav-item active" v-if="localtoken===null">
                 <!-- <router-link to="/signin" tag="li" class="nav-link">Login &</router-link> -->
                     <button @click="showLoginModal">Login &</button>
                     <login v-if="showLogin" :toggle="showLoginModal"/>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="localtoken===null">
                 <!-- <router-link to="/signup" tag="li" class="nav-link">&nbsp;Signup</router-link> -->
                     <button @click="showRegi=true">Signup</button>
                     <Register v-if="showRegi" :toggleReg="showRegiModal"/>
+                </li>
+                <li class="nav-item active" v-if="localtoken!==null">
+                <!-- <router-link to="/signin" tag="li" class="nav-link">Login &</router-link> -->
+                    <button>My Account</button>                    
+                </li>
+                <li class="nav-item active" v-if="localtoken!==null">
+                <!-- <router-link to="/signin" tag="li" class="nav-link">Login &</router-link> -->
+                    <button @click="removeAuth">Logout</button>                    
                 </li>
                 <li class="nav-item">
                 <router-link to="/cart" tag="li" class="nav-link">
@@ -75,15 +83,18 @@ export default {
         Register
     },
 
-    computed: {
-        categories() {
-            return this.$store.state.HeaderStore.categories ;
-        }
-    }, 
-
     created () {
         this.$store.dispatch('getCategories');
     },
+
+    computed: {
+        categories() {
+            return this.$store.state.HeaderStore.categories ;
+        },
+        localtoken () {
+            return localStorage.getItem('token');
+        }
+    }, 
 
     data () {
         return {
@@ -98,11 +109,19 @@ export default {
             this.$store.dispatch('getBySubcategory', subcategoryid);
             this.$router.push({name: 'ListView', component: ListView, params: { id: subcategoryid }});            
         },
-        showLoginModal () {            
+        showLoginModal () { 
+            this.showRegi = false;           
             this.showLogin = !this.showLogin;
         },
-        showRegiModal () {            
+        showRegiModal () {        
+            this.showLogin = false;    
             this.showRegi = !this.showRegi;
+        },
+        removeAuth () {
+            this.$store.state.AuthenticationStore.token = '';
+            localStorage.removeItem('token');
+            localStorage.removeItem('uid');
+            location.reload();
         }
     }
 }

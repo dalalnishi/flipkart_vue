@@ -35,7 +35,7 @@
                 </div>
 
                 <button id="goto-signin-btn" @click="onLogin">Sign In</button>
-                <button id="register-btn" @click="redirectRegi">SIGNUP</button>
+                <!-- <button id="register-btn" @click="redirectRegi">SIGNUP</button> -->
                 <Register v-if="showRegi" :toggleReg="redirectRegi"/>
               </form>
 
@@ -81,14 +81,7 @@ export default {
       emailValid: false,
       passValid: false,
       logError: '',
-      showRegi: false,
-      disable: true
-    }
-  },
-
-  computed: {
-    authStore () {
-      return this.$store.state.AuthenticationStore.errorMsg;
+      showRegi: false
     }
   },
 
@@ -145,11 +138,19 @@ export default {
             email: this.emailid,
             password: this.password
           }
+ 
           this.$store.dispatch('logUser', user)
-            .then(() => {
-              this.$message.error('Login Failed!!!');
-            })  
-        }    
+          .then((response) => {
+            if(response) {
+              this.toggle();
+              this.$router.push('/');
+              location.reload();
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          })
+        }  
       }  
     },
 
