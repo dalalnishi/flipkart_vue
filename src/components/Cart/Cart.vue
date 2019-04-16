@@ -36,11 +36,12 @@
 		</td>
 		<td data-th="Price">{{ formatPrice(c.product_price) }}</td>
 		<td data-th="Quantity">
-			<input type="number" class="form-control text-center" 
+			<input type="number"
                 v-model="qty"
 				value="1" 
-				min="0"
-                @input="changeQty(value)"
+				min="1"
+                @input="changeQty()"
+                class="form-control text-center" 
             >
 		</td>
 		<td data-th="Subtotal" class="text-center">{{subtotal(c.product_price)}}</td>
@@ -140,8 +141,9 @@ export default {
             let value = price*this.qty;
             return "₹ " + (value.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,")).split('.')[0]
         },
-        changeQty (qty) {
-            console.log(event.target.value,'hyy ',qty);
+        changeQty () {
+            event.target.value = event.target.value;
+            console.log(event.target);
         }
     }
 }

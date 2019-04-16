@@ -36,7 +36,11 @@
                 <li class="nav-item">
                 <router-link to="/cart" tag="li" class="nav-link">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Cart
+                        <!-- <a href="#" class="head-example"></a> -->
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;
+                        <a-badge :count="cartCount">Cart
+                        </a-badge>
+                        
                 </router-link>
                 </li>
             </ul>
@@ -93,6 +97,14 @@ export default {
         },
         localtoken () {
             return localStorage.getItem('token');
+        },
+        cartCount () {
+            if(JSON.parse(localStorage.getItem('product_id')).length>0) {
+                return JSON.parse(localStorage.getItem('product_id')).length
+            }
+            else {
+                return 0;
+            }
         }
     }, 
 

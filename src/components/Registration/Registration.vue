@@ -103,7 +103,7 @@ export default {
     // Form Validation
     isValid (event) {
       let name = event.target.name;
-      let value = event.target.value;
+      // let value = event.target.value;
 
       if(name==='email') {
         
